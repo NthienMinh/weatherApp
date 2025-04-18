@@ -5,13 +5,23 @@ enum MainState{
 }
 
 class MainCubit extends BaseCubit<int>{
-  MainCubit():super(0);
+  MainCubit():super(0){
+    firstLoading();
+  }
 
   MainState mainState = MainState.loading;
 
-  loading()async{
+  firstLoading()async{
     await Future.delayed(const Duration(milliseconds: 1000));
     mainState = MainState.error;
+    baseEmit(state+1);
+  }
+
+  reload()async{
+    mainState = MainState.loading;
+    baseEmit(state+1);
+    await Future.delayed(const Duration(milliseconds: 1000));
+    mainState = MainState.success;
     baseEmit(state+1);
   }
 

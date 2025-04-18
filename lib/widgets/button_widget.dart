@@ -17,9 +17,9 @@ class ButtonWidget extends StatelessWidget {
         foregroundColor: ColorConfigs.whiteTextColor,
         padding: EdgeInsets.symmetric(
             horizontal: Resizable.padding(context, 24),
-            vertical: Resizable.padding(context, 12)),
+            vertical: Resizable.padding(context, 10)),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(2),
         ),
         elevation: 4, // độ nổi
       ),

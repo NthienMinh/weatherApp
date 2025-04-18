@@ -11,7 +11,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MainCubit()..loading(),
+      create: (context) => MainCubit(),
       child: BlocBuilder<MainCubit, int>(builder: (c, s) {
         var mainCubit = BlocProvider.of<MainCubit>(c);
 
