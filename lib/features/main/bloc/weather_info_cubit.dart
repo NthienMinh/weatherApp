@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:weather/blocs/base_cubit.dart';
 import 'package:weather/models/current_weather_model.dart';
 import 'package:weather/models/forecast_model.dart';
@@ -12,8 +11,6 @@ class WeatherInfoCubit extends BaseCubit<int> {
     firstLoading();
   }
 
-  LocationData? locationData;
-
   CurrentWeatherModel? currentWeather;
 
   WeatherInfoLoadingState mainState = WeatherInfoLoadingState.loading;
@@ -23,17 +20,16 @@ class WeatherInfoCubit extends BaseCubit<int> {
   List<ForecastModel> listForecast = [];
 
   firstLoading() async {
-    await getCurrentLocation();
-
-    if (locationData == null) {
+    var position = await getCurrentPosition();
+    if (position == null) {
       mainState = WeatherInfoLoadingState.error;
     } else {
       currentWeather = await WeatherInfoServices.read.getCurrentLocationTemp(
-          locationData!.latitude.toString(),
-          locationData!.longitude.toString());
+          position.latitude.toString(),
+          position.longitude.toString());
       fourDaysWeather = await WeatherInfoServices.read.getFourDaysTemp(
-          locationData!.latitude.toString(),
-          locationData!.longitude.toString());
+          position.latitude.toString(),
+          position.longitude.toString());
       if (currentWeather == null || fourDaysWeather == null) {
         mainState = WeatherInfoLoadingState.error;
       } else {
@@ -49,31 +45,30 @@ class WeatherInfoCubit extends BaseCubit<int> {
     baseEmit(state + 1);
   }
 
-  Future<void> getCurrentLocation() async {
-    Location location = Location();
-
+  Future<Position?> getCurrentPosition() async {
     bool serviceEnabled;
-    PermissionStatus permissionGranted;
+    LocationPermission permission;
 
-    serviceEnabled = await location.serviceEnabled();
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        debugPrint("Dịch vụ vị trí chưa được bật.");
-        return;
+      return null;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return null;
       }
     }
 
-    permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        debugPrint("Không có quyền truy cập vị trí.");
-        return;
-      }
+    if (permission == LocationPermission.deniedForever) {
+      return null;
     }
-    locationData = await location.getLocation();
+
+    return await Geolocator.getCurrentPosition();
   }
+
 
   List<ForecastModel> getDailyAveragesList(List<ForecastModel> data) {
     final Map<String, List<double>> groupedTemps = {};
@@ -89,11 +84,11 @@ class WeatherInfoCubit extends BaseCubit<int> {
     List<ForecastModel> result = [];
     groupedTemps.forEach((day, temps) {
       final avg = temps.reduce((a, b) => a + b) / temps.length;
-      result.add(ForecastModel(
-          day: day, temp: double.parse(avg.toStringAsFixed(2))));
+      result.add(
+          ForecastModel(day: day, temp: double.parse(avg.toStringAsFixed(2))));
     });
 
-    return result.sublist(0,4);
+    return result.sublist(0, 4);
   }
 
   String getDate(String data) {
