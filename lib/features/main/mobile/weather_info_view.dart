@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/configs/color_configs.dart';
 import 'package:weather/configs/text_style_configs.dart';
+import 'package:weather/features/main/bloc/weather_info_cubit.dart';
 import 'package:weather/resources/texts/texts.dart';
 import 'package:weather/utils/resizable_utils.dart';
 import 'package:weather/widgets/weather_info_widget.dart';
@@ -11,12 +13,7 @@ class WeatherInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> forecast = [
-      {"day": "Tuesday", "temp": "24°C"},
-      {"day": "Wednesday", "temp": "21°C"},
-      {"day": "Thursday", "temp": "28°C"},
-      {"day": "Friday", "temp": "26°C"},
-    ];
+    var weatherInfoCubit = BlocProvider.of<WeatherInfoCubit>(context);
     return Scaffold(
         backgroundColor: ColorConfigs.bgColor,
         body: AnimatedContainer(
@@ -25,9 +22,9 @@ class WeatherInfoView extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: Resizable.size(context, 56)),
-              Text("20 ${Texts.weatherInfo.celsius}",
+              Text("${weatherInfoCubit.currentWeather!.temp} ${Texts.weatherInfo.celsius}",
                   style: TextStyleConfigs.bigBoldBlackTextStyle(context)),
-              Text("Bangalore",
+              Text(weatherInfoCubit.currentWeather!.location,
                   style: TextStyleConfigs.normalBlueTextStyle(context)),
               SizedBox(height: Resizable.size(context, 65)),
               Expanded(
@@ -47,9 +44,9 @@ class WeatherInfoView extends StatelessWidget {
                           child: Column(
                             children: [
                               SizedBox(height: Resizable.size(context, 16)),
-                              ...forecast.map((e) => WeatherInfoRow(
-                                    day: e['day'] ?? "",
-                                    temperature: e['temp'] ?? "",
+                              ...weatherInfoCubit.listForecast.map((e) => WeatherInfoRow(
+                                    day: e.day,
+                                    temperature: e.temp.toString(),
                                   ))
                             ],
                           ))

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/configs/color_configs.dart';
+import 'package:weather/resources/texts/texts.dart';
 import 'package:weather/utils/resizable_utils.dart';
 
 class WeatherInfoRow extends StatelessWidget {
@@ -23,7 +24,7 @@ class WeatherInfoRow extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(child: Text(day)),
-                  Text(temperature),
+                  Text("${temperature} ${Texts.weatherInfo.celsius}"),
                 ],
               )),
           Container(
