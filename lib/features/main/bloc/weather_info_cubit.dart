@@ -1,27 +1,27 @@
 import 'package:weather/blocs/base_cubit.dart';
 
-enum MainState{
+enum WeatherInfoLoadingState{
   loading, success, error
 }
 
-class MainCubit extends BaseCubit<int>{
-  MainCubit():super(0){
+class WeatherInfoCubit extends BaseCubit<int>{
+  WeatherInfoCubit():super(0){
     firstLoading();
   }
 
-  MainState mainState = MainState.loading;
+  WeatherInfoLoadingState mainState = WeatherInfoLoadingState.loading;
 
   firstLoading()async{
     await Future.delayed(const Duration(milliseconds: 1000));
-    mainState = MainState.error;
+    mainState = WeatherInfoLoadingState.error;
     baseEmit(state+1);
   }
 
   reload()async{
-    mainState = MainState.loading;
+    mainState = WeatherInfoLoadingState.loading;
     baseEmit(state+1);
     await Future.delayed(const Duration(milliseconds: 1000));
-    mainState = MainState.success;
+    mainState = WeatherInfoLoadingState.success;
     baseEmit(state+1);
   }
 

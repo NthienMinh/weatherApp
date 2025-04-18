@@ -1,8 +1,8 @@
 
 
-import 'package:weather/resources/texts/texts_main.dart';
+import 'package:weather/resources/texts/texts_weather_info.dart';
 
 class Texts {
-  static TextsMain main = const TextsMain();
+  static TextsWeatherInfo weatherInfo = const TextsWeatherInfo();
 
 }

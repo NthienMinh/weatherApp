@@ -8,7 +8,7 @@ class TextStyleConfigs {
 
   static TextStyle errorTextStyle(BuildContext context){
     return TextStyle(
-      color: ColorConfigs.whiteTextColor,
+      color: ColorConfigs.whiteColor,
       fontSize: Resizable.font(context, 54),
       fontWeight: FontWeight.w100
     );
@@ -16,7 +16,7 @@ class TextStyleConfigs {
 
   static TextStyle bigBoldBlackTextStyle(BuildContext context){
     return TextStyle(
-        color: ColorConfigs.blackTextColor,
+        color: ColorConfigs.blackColor,
         fontSize: Resizable.font(context, 96),
         fontWeight: FontWeight.w900,
         height: 1.2,
@@ -26,7 +26,7 @@ class TextStyleConfigs {
 
   static TextStyle normalBlueTextStyle(BuildContext context){
     return TextStyle(
-        color: ColorConfigs.blueTextColor,
+        color: ColorConfigs.blueColor,
         fontSize: Resizable.font(context, 36),
         fontWeight: FontWeight.w100,
         height: 1.4,
@@ -36,7 +36,7 @@ class TextStyleConfigs {
 
   static TextStyle smallBlackTextStyle(BuildContext context){
     return TextStyle(
-        color: ColorConfigs.blackTextColor,
+        color: ColorConfigs.blackColor,
         fontSize: Resizable.font(context, 16),
         fontWeight: FontWeight.w400,
         height: 1.2,

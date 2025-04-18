@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/configs/color_configs.dart';
 import 'package:weather/configs/text_style_configs.dart';
-import 'package:weather/features/main/bloc/main_cubit.dart';
+import 'package:weather/features/main/bloc/weather_info_cubit.dart';
 import 'package:weather/resources/texts/texts.dart';
 import 'package:weather/utils/resizable_utils.dart';
 import 'package:weather/widgets/button_widget.dart';
@@ -12,7 +12,7 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var mainCubit = BlocProvider.of<MainCubit>(context);
+    var mainCubit = BlocProvider.of<WeatherInfoCubit>(context);
     return Scaffold(
         backgroundColor: ColorConfigs.errorBgColor,
         body: Padding(
@@ -22,7 +22,7 @@ class ErrorView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(Texts.main.errorText,
+                  Text(Texts.weatherInfo.errorText,
                       textAlign: TextAlign.justify,
                       style: TextStyleConfigs.errorTextStyle(context)),
                   SizedBox(height: Resizable.size(context, 44)),

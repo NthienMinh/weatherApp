@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           fontFamily: "Roboto",
         ),
       ),
-      initialRoute: Routes.main,
+      initialRoute: Routes.weatherInfo,
       onGenerateRoute: Routes.generateRoute,
     );
   }

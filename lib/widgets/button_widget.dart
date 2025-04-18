@@ -14,7 +14,7 @@ class ButtonWidget extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorConfigs.buttonBgColor,
-        foregroundColor: ColorConfigs.whiteTextColor,
+        foregroundColor: ColorConfigs.whiteColor,
         padding: EdgeInsets.symmetric(
             horizontal: Resizable.padding(context, 24),
             vertical: Resizable.padding(context, 10)),
@@ -24,7 +24,7 @@ class ButtonWidget extends StatelessWidget {
         elevation: 4, // độ nổi
       ),
       child: Text(
-        Texts.main.retry,
+        Texts.weatherInfo.retry,
         style: TextStyle(
           fontSize: Resizable.font(context, 16),
           fontWeight: FontWeight.bold,
