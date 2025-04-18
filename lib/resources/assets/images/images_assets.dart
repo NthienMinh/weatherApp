@@ -1,0 +1,5 @@
+
+class ImageAssets {
+  const ImageAssets();
+
+}
